@@ -32,7 +32,8 @@ def main() :
           print("new sended")
           time.sleep(60)
   except Exception as e :
-    print(e)
+    print(f"ERROR: {e}")
+    raise
 
 
 if __name__ == "__main__" :
