@@ -6,6 +6,10 @@ on:
 
   workflow_dispatch:
 
+concurrency:
+  group: news-bot
+  cancel-in-progress: false
+  
 jobs:
   run:
     runs-on: ubuntu-latest
