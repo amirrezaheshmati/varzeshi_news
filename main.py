@@ -32,7 +32,10 @@ def main() :
           print("new sended")
           time.sleep(60)
   except Exception as e :
-    print(f"ERROR: {e}")
+    import traceback
+
+    print("ERROR:", repr(e))
+    traceback.print_exc()
     raise
 
 
