@@ -30,7 +30,8 @@ def main() :
           print("text translated")
           asyncio.run(bot.main(image_filename , fa_text))
           print("new sended")
-          time.sleep(60)
+          # time.sleep(60)
+          break
   except Exception as e :
     import traceback
 
