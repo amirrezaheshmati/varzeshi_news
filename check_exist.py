@@ -16,19 +16,52 @@ def check(url) :
   data = r.json()
   content = data["files"]["news.json"]["content"]
   news = json.loads(content)
-  print(news)
-  # with open("urls.json" , "r") as file :
-    # urls = json.load(file)
-  # 
-  # if url in urls :
-    # return False
-  # 
-  # if len(urls) >= 500 :
-    # urls.pop(0)
-# 
-  # else :
-    # urls.append(url)
-    # with open("urls.json" , "w") as file :
-      # json.dump(urls , file)  
-    # return True
-#
+  if url in news :
+    return False
+  
+  if len(news) >= 500 :
+    news.pop(0)
+
+  else :
+    news.append(url)  
+    requests.patch(
+      f"https://api.github.com/gists/{GIST_ID}",
+      headers={
+         "Authorization": f"Bearer {GIST_TOKEN}"
+      },
+      json={
+        "files": {
+          "news.json": {
+            "content": json.dumps(news)
+          }
+        }
+      }
+    )
+    return True
+  
+
+
+def delete_last_news() :
+  r = requests.get(
+    f"https://api.github.com/gists/{GIST_ID}",
+    headers={
+      "Authorization": f"Bearer {GIST_TOKEN}"
+    }
+  )
+  data = r.json()
+  content = data["files"]["news.json"]["content"]
+  news = json.loads(content)
+  news.pop()
+  requests.patch(
+    f"https://api.github.com/gists/{GIST_ID}",
+    headers={
+       "Authorization": f"Bearer {GIST_TOKEN}"
+    },
+    json={
+      "files": {
+        "news.json": {
+          "content": json.dumps(news)
+        }
+      }
+    }
+  )
