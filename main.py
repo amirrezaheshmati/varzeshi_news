@@ -24,7 +24,7 @@ def main() :
           fa_text = translator.translate(text)
           if "Error" in fa_text :
             check_exist.delete_last_news()
-            time.sleep(30)
+            break
           else :
             fa_text += "\n" + "\n"
             fa_text += "<b>ورزش نما</b>" + "\n"
