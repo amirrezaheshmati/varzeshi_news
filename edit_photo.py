@@ -6,6 +6,8 @@ LOGO = "logo.png"
 
 
 def edit_photo(image_url) :
+  if not image_url :
+    return LOGO
   response = requests.get(image_url)
   print("get image")
   filename = f"{uuid.uuid4()}.png"
