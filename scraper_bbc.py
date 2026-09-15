@@ -23,7 +23,9 @@ def read_news() :
     soup = BeautifulSoup(response.text, "html.parser")
     title = soup.select_one("h1").get_text()
     image_url = soup.select_one("figure img")["src"]
-    summary = soup.select_one("b").get_text()
+    summary_divs = soup.select("div.css-ffsn56")
+    summary = summary_divs[2].get_text()
+    print(summary)
     yield {
       "title" : title,
       "image_url" : image_url,
@@ -41,3 +43,6 @@ def filtered(soup) :
       if "https://www.bbc.com/persian/articles/" in link :
         links.append(link)
   return links
+
+for x in read_news():
+  ""
