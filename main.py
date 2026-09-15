@@ -21,17 +21,12 @@ def main() :
           text += f"<b>{new["title"]}</b>"
           text += "\n" + "\n" + "\n"
           text += f"{new["summary"]}"
-          fa_text = translator.translate(text)
-          if "Error" in fa_text :
-            check_exist.delete_last_news()
-            break
-          else :
-            fa_text += "\n" + "\n"
-            fa_text += "<b>ورزش نما</b>" + "\n"
-            fa_text += "@VarzNema"
-            print("text translated")
-            asyncio.run(bot.main(image_filename , fa_text))
-            print("new sended")
+          text += "\n" + "\n"
+          text += "<b>ورزش نما</b>" + "\n"
+          text += "@VarzNema"
+          print("text translated")
+          asyncio.run(bot.main(image_filename , text))
+          print("new sended")
           time.sleep(60)
   except Exception as e :
     import traceback

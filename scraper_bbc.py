@@ -1,40 +1,38 @@
-import feedparser
 import requests
 from bs4 import BeautifulSoup
 
-RSS_URL = "http://newsrss.bbc.co.uk/rss/sportonline_uk_edition/football/rss.xml"
 
 def read_news() :
   try :
-    feed = feedparser.parse(RSS_URL)
-    print("read_feed , count news:" , len(feed.entries))
-    for news in feed.entries:
-      title = news.get("title", "بدون عنوان")
-      link = news.get("link", "بدون لینک")
-      summary = news.get("summary", "بدون خلاصه")
-
-      response = requests.get(
-        link,
-        headers={
-            "User-Agent": "Mozilla/5.0"
-        }
-      )
-
-      soup = BeautifulSoup(response.text, "html.parser")
-      image = soup.select_one("picture img")
-      image_url = ""
-
-      if image:
-        image_url = image.get("src")
-
-      yield {
-        "title" : title,
-        "summary" : summary,
-        "image_url" : image_url,
-        "link" : link
+    response = requests.get(
+      "https://www.bbc.com/persian/topics/cz7k02839xet.lite",
+      headers={
+          "User-Agent": "Mozilla/5.0"
       }
-      
+    )
+    soup = BeautifulSoup(response.text, "html.parser")
+    for li in soup.find_all("li") :
+      a = li.find("a" , href = True)
+
+      if a :
+        link = a["href"]
+        if "https://www.bbc.com/persian/articles/" in link :
+          main_link = link.replace(".lite" , "")
+          response = requests.get(
+            main_link,
+            headers={
+                "User-Agent": "Mozilla/5.0"
+            }
+          )
+          soup = BeautifulSoup(response.text, "html.parser")
+          title = soup.select_one("h1").get_text()
+          image_url = soup.select_one("figure img")["src"]
+          summary = soup.select_one("b").get_text()
+          yield {
+            "title" : title,
+            "image_url" : image_url,
+            "summary" : summary,
+            "link" : main_link
+          }
   except :
     yield None
-
-read_news()

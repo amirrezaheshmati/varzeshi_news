@@ -1,7 +1,8 @@
 from telegram import Bot
 import os
 
-TOKEN = os.environ["BOT_TOKEN"]
+# TOKEN = os.environ["BOT_TOKEN"]
+TOKEN = "8959859464:AAFmiCNHuCiY8kZ-2aCCBQWef7l6F0fUErk"
 CHANNEL_ID = "@VarzNema"
 
 async def main(image , text) :
