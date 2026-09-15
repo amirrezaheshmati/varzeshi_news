@@ -11,7 +11,7 @@ def read_news() :
   )
   soup = BeautifulSoup(response.text, "html.parser")
   links = filtered(soup)
-  print(len(links))
+  print("links len :" ,len(links))
   for link in links :
     main_link = link.replace(".lite" , "")
     response = requests.get(
