@@ -1,8 +1,7 @@
-import scraper_bbc
+import scarper_photo
 import bot
 import check_exist
 import edit_photo
-import translator
 import asyncio
 import time
 
@@ -12,7 +11,7 @@ import time
 def main() :
   print("start")
   try :
-    for new in scraper_bbc.read_news() :
+    for new in scarper_photo.read_news() :
       text = ""
       if new :
         if check_exist.check(new["link"]) :
@@ -22,9 +21,9 @@ def main() :
           text += "\n" + "\n" + "\n"
           text += f"{new["summary"]}"
           text += "\n" + "\n"
+          text += "منبع : ورزش 3" + "\n"
           text += "<b>ورزش نما</b>" + "\n"
           text += "@VarzNema"
-          print("text translated")
           asyncio.run(bot.main(image_filename , text))
           print("new sended")
           time.sleep(60)
