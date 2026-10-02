@@ -22,22 +22,21 @@ def check(url) :
   if len(news) >= 500 :
     news.pop(0)
 
-  else :
-    news.append(url)  
-    requests.patch(
-      f"https://api.github.com/gists/{GIST_ID}",
-      headers={
-         "Authorization": f"Bearer {GIST_TOKEN}"
-      },
-      json={
-        "files": {
-          "news.json": {
-            "content": json.dumps(news)
-          }
+  news.append(url)  
+  requests.patch(
+    f"https://api.github.com/gists/{GIST_ID}",
+    headers={
+       "Authorization": f"Bearer {GIST_TOKEN}"
+    },
+    json={
+      "files": {
+        "news.json": {
+          "content": json.dumps(news)
         }
       }
-    )
-    return True
+    }
+  )
+  return True
   
 
 
